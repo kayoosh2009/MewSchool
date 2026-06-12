@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MewSchool</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link href="css/index.css" rel="stylesheet">
 </head>
+
 <body>
 
     <!-- ===== NAVBAR ===== -->
@@ -13,17 +15,27 @@
         <div class="navbar-container">
             <a href="index.html" class="navbar-logo">
                 <img src="img/logo_nav.png" alt="MewSchool Logo">
+                <span class="navbar-title">MewSchool</span>
             </a>
             <div class="lang-selector">
                 <button class="lang-btn" id="langBtn">
-                    <span class="lang-icon">🌐</span>
+                    <img src="img/icons/lang.png" alt="Language" class="lang-main-icon">
                     <span class="lang-current">עברית</span>
                     <span class="lang-arrow">▼</span>
                 </button>
                 <div class="lang-dropdown" id="langDropdown">
-                    <a href="#" data-lang="he" data-page="index_he.html">עברית</a>
-                    <a href="#" data-lang="ru" data-page="index_ru.html">Русский</a>
-                    <a href="#" data-lang="en" data-page="index_en.html">English</a>
+                    <a href="#" data-lang="he" data-page="index_he.html">
+                        <img src="img/icons/he.png" alt="Israel" class="lang-flag">
+                        <span>עברית</span>
+                    </a>
+                    <a href="#" data-lang="ru" data-page="index_ru.html">
+                        <img src="img/icons/ru.png" alt="Russia" class="lang-flag">
+                        <span>Русский</span>
+                    </a>
+                    <a href="#" data-lang="en" data-page="index_en.html">
+                        <img src="img/icons/en.png" alt="USA" class="lang-flag">
+                        <span>English</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -116,7 +128,7 @@
         </div>
     </footer>
 
-    <!-- ===== SCRIPTS ===== -->
     <script src="js/index.js"></script>
 </body>
+
 </html>
