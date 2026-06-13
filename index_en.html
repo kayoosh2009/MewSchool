@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MewSchool</title>
+    <link rel="stylesheet" href="css/index_ru.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">
+                <img src="img/logo_nav.png" alt="MewSchool Logo">
+                <span class="navbar-title">MewSchool</span>
+            </a>
+            <div class="lang-selector">
+                <button class="lang-btn" id="langBtn">
+                    <img src="img/icons/lang.png" alt="Language" class="lang-main-icon">
+                    <span class="lang-current">English</span>
+                    <span class="lang-arrow">▼</span>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <a href="index_en.html" data-lang="en" data-page="index_en.html">
+                        <img src="img/icons/en.png" alt="USA" class="lang-flag">
+                        <span>English</span>
+                    </a>
+                    <a href="index_ru.html" data-lang="ru" data-page="index_ru.html">
+                        <img src="img/icons/ru.png" alt="Russia" class="lang-flag">
+                        <span>Русский</span>
+                    </a>
+                    <a href="index.html" data-lang="he" data-page="index.html">
+                        <img src="img/icons/he.png" alt="Israel" class="lang-flag">
+                        <span>עברית</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="ad-banner">
+        <a href="#">
+            <img src="img/adbanner_he.png" alt="Advertisement" width="728" height="90">
+        </a>
+    </section>
+    
+    <section class="subjects-section">
+        <div class="subjects-grid">
+
+            <a href="#" class="subject-card" style="--card-color: #4A90D9;">
+                <div class="subject-icon">
+                    <img src="img/icons/math.png" alt="מתמטיקה">
+                </div>
+                <span class="subject-name">Math</span>
+            </a>
+
+            <a href="#" class="subject-card" style="--card-color: #E74C3C;">
+                <div class="subject-icon">
+                    <img src="img/icons/english.png" alt="אנגלית">
+                </div>
+                <span class="subject-name">English</span>
+            </a>
+
+            <a href="#" class="subject-card" style="--card-color: #2ECC71;">
+                <div class="subject-icon">
+                    <img src="img/icons/chemistry.png" alt="כימיה">
+                </div>
+                <span class="subject-name">Chemistry</span>
+            </a>
+
+            <a href="#" class="subject-card" style="--card-color: #F39C12;">
+                <div class="subject-icon">
+                    <img src="img/icons/biology.png" alt="ביולוגיה">
+                </div>
+                <span class="subject-name">Biology</span>
+            </a>
+
+            <a href="#" class="subject-card" style="--card-color: #9B59B6;">
+                <div class="subject-icon">
+                    <img src="img/icons/physics.png" alt="פיזיקה">
+                </div>
+                <span class="subject-name">Physics</span>
+            </a>
+
+            <a href="#" class="subject-card" style="--card-color: #1ABC9C;">
+                <div class="subject-icon">
+                    <img src="img/icons/programming.png" alt="תכנות">
+                </div>
+                <span class="subject-name">Programming</span>
+            </a>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <p>Main developer: <a href="#">@kayoosh_x</a></p>
+                <p>Phone <a href="tel:+972535411783">+972 535411783</a></p>
+                <p>Email: <a href="mailto:kayoosh2009@gmail.com">kayoosh2009@gmail.com</a></p>
+            </div>
+            
+            <a href="#" class="donate-btn">
+                <span class="donate-icon">💜</span>
+                <span>Donate</span>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Подключаем ваш JS файл -->
+    <script src="js/index.js"></script>
+</body>
+</html>
