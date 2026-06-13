@@ -36,7 +36,7 @@
             if (savedLang) {
                 const currentPage = window.location.pathname.split('/').pop();
                 // If user is on default Hebrew page but has another language saved
-                if (currentPage === 'index.html' || currentPage === 'index_he.html') {
+                if (currentPage === 'index.html' || currentPage === 'index.html') {
                     if (savedLang !== 'he') {
                         const langMap = {
                             'ru': 'index_ru.html',
