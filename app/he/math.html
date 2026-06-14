@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מתמטיקה - MewSchool</title>
+    <link href="css/math.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">
+                <img src="../img/logo_nav.png" alt="MewSchool Logo">
+                <span class="navbar-title">MewSchool</span>
+            </a>
+            <div class="lang-selector">
+                <button class="lang-btn" id="langBtn">
+                    <img src="img/icons/lang.png" alt="Language" class="lang-main-icon">
+                    <span class="lang-current">עברית</span>
+                    <span class="lang-arrow">▼</span>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <a href="#" data-lang="he" data-page="math.html">
+                        <img src="img/icons/he.png" alt="Israel" class="lang-flag">
+                        <span>עברית</span>
+                    </a>
+                    <a href="#" data-lang="ru" data-page="../ru/math.html">
+                        <img src="img/icons/ru.png" alt="Russia" class="lang-flag">
+                        <span>Русский</span>
+                    </a>
+                    <a href="#" data-lang="en" data-page="../en/math.html">
+                        <img src="img/icons/en.png" alt="USA" class="lang-flag">
+                        <span>English</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+        <h1 class="page-title">מתמטיקה</h1>
+
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" class="search-input" placeholder="חפש נושא בלימודים (למשל: משוואות, שברים...)">
+        </div>
+
+        <div id="topicsContainer">
+            <!-- Темы будут сгенерированы здесь автоматически через JavaScript -->
+        </div>
+
+        <div id="noResults" class="no-results">
+            לא נמצאו נושאים התואמים לחיפוש שלך 😕
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <p><strong>מפתח ראשי:</strong> @kayoosh_x</p>
+                <p><strong>טלפון:</strong> <a href="tel:+972535411783" dir="ltr">+972 535411783</a></p>
+                <p><strong>אימייל:</strong> <a href="mailto:kayoosh2009@gmail.com">kayoosh2009@gmail.com</a></p>
+            </div>
+            <div class="footer-donate">
+                <a href="#" class="donate-btn">
+                    <span class="donate-icon">💜</span>
+                    <span>תרום</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mathTopics = [
+            // כיתה ה'
+            { grade: "כיתה ה'", topic: "אחוזים", link: "#" },
+            { grade: "כיתה ה'", topic: "גיאומטריה - שטח והיקף", link: "#" },
+            { grade: "כיתה ה'", topic: "מספרים עשרוניים", link: "#" },
+            { grade: "כיתה ה'", topic: "שברים", link: "#" },
+            
+            // כיתה ו'
+            { grade: "כיתה ו'", topic: "יחס ופרופורציה", link: "#" },
+            { grade: "כיתה ו'", topic: "ממוצע", link: "#" },
+            { grade: "כיתה ו'", topic: "מעגל - היקף ושטח", link: "#" },
+            { grade: "כיתה ו'", topic: "פעולות בשברים", link: "#" },
+
+            // כיתה ז'
+            { grade: "כיתה ז'", topic: "חזקות", link: "#" },
+            { grade: "כיתה ז'", topic: "משוואות", link: "#" },
+            { grade: "כיתה ז'", topic: "מספרים שליליים", link: "#" },
+            { grade: "כיתה ז'", topic: "פונקציות - מבוא", link: "#" },
+
+            // כיתה ח'
+            { grade: "כיתה ח'", topic: "אלגברה - פירוק לגורמים", link: "#" },
+            { grade: "כיתה ח'", topic: "גיאומטריה - משולשים", link: "#" },
+            { grade: "כיתה ח'", topic: "הסתברות", link: "#" },
+            { grade: "כיתה ח'", topic: "מערכות משוואות", link: "#" },
+
+            // כיתה ט'
+            { grade: "כיתה ט'", topic: "טרינום", link: "#" },
+            { grade: "כיתה ט'", topic: "נוסחאות הכפל המקוצר", link: "#" },
+            { grade: "כיתה ט'", topic: "פונקציה ריבועית (פרבולה)", link: "#" },
+            { grade: "כיתה ט'", topic: "משפט פיתגורס", link: "#" },
+
+            // כיתה י'
+            { grade: "כיתה י'", topic: "אי-שוויונים", link: "#" },
+            { grade: "כיתה י'", topic: "גיאומטריה אנליטית", link: "#" },
+            { grade: "כיתה י'", topic: "טריגונומטריה", link: "#" },
+            { grade: "כיתה י'", topic: "פונקציות - חקירה", link: "#" },
+
+            // כיתה י"א
+            { grade: "כיתה י\"א", topic: "חדו\"א - נגזרות", link: "#" },
+            { grade: "כיתה י\"א", topic: "סדרות חשבוניות", link: "#" },
+            { grade: "כיתה י\"א", topic: "סדרות הנדסיות", link: "#" },
+            { grade: "כיתה י\"א", topic: "וקטורים", link: "#" },
+
+            // כיתה י"ב
+            { grade: "כיתה י\"ב", topic: "אינטגרלים", link: "#" },
+            { grade: "כיתה י\"ב", topic: "הסתברות - ברנולי", link: "#" },
+            { grade: "כיתה י\"ב", topic: "מספרים מרוכבים", link: "#" }
+        ];
+
+        const topicsContainer = document.getElementById('topicsContainer');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+
+        function renderTopics(filterText = '') {
+            topicsContainer.innerHTML = '';
+            
+            const filteredTopics = mathTopics.filter(item => 
+                item.topic.toLowerCase().includes(filterText.toLowerCase()) || 
+                item.grade.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            if (filteredTopics.length === 0) {
+                noResults.classList.add('visible');
+                return;
+            } else {
+                noResults.classList.remove('visible');
+            }
+
+            // Группируем темы по классам
+            const grouped = {};
+            filteredTopics.forEach(item => {
+                if (!grouped[item.grade]) {
+                    grouped[item.grade] = [];
+                }
+                grouped[item.grade].push(item);
+            });
+
+            const sortedGrades = Object.keys(grouped).sort();
+            
+            sortedGrades.forEach(grade => {
+                grouped[grade].sort((a, b) => a.topic.localeCompare(b.topic, 'he'));
+
+                const section = document.createElement('div');
+                section.className = 'grade-section';
+
+                const title = document.createElement('h2');
+                title.className = 'grade-title';
+                title.textContent = grade;
+                section.appendChild(title);
+
+                const list = document.createElement('div');
+                list.className = 'topics-list';
+
+                grouped[grade].forEach(topic => {
+                    const link = document.createElement('a');
+                    link.href = topic.link;
+                    link.className = 'topic-item';
+                    link.innerHTML = `
+                        <span class="topic-icon">📐</span>
+                        <span class="topic-name">${topic.topic}</span>
+                    `;
+                    list.appendChild(link);
+                });
+
+                section.appendChild(list);
+                topicsContainer.appendChild(section);
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            renderTopics(e.target.value.trim());
+        });
+
+        renderTopics();
+
+        const langBtn = document.getElementById('langBtn');
+        const langDropdown = document.getElementById('langDropdown');
+        const langLinks = langDropdown.querySelectorAll('a');
+
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langBtn.closest('.lang-selector').classList.toggle('active');
+        });
+
+        document.addEventListener('click', () => {
+            langBtn.closest('.lang-selector').classList.remove('active');
+        });
+
+        langLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.setItem('mewschool_lang', link.dataset.lang);
+                window.location.href = link.dataset.page;
+            });
+        });
+
+        (function checkLanguage() {
+            const savedLang = localStorage.getItem('mewschool_lang');
+            if (savedLang) {
+                const currentPage = window.location.pathname.split('/').pop();
+                if (currentPage === 'math.html' || currentPage === '') { 
+                    if (savedLang !== 'he') {
+                        const langMap = { 'ru': 'index_ru.html', 'en': 'index_en.html' };
+                        if (langMap[savedLang]) window.location.href = langMap[savedLang];
+                    }
+                }
+            }
+        })();
+
+        (function highlightCurrentLang() {
+            const savedLang = localStorage.getItem('mewschool_lang') || 'he';
+            langLinks.forEach(link => {
+                if (link.dataset.lang === savedLang) link.classList.add('active-lang');
+            });
+        })();
+    </script>
+</body>
+</html>
