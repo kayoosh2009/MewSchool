@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>מתמטיקה - MewSchool</title>
-    <link href="css/math.css" rel="stylesheet">
+    <link href="../css/math.css" rel="stylesheet">
 </head>
 <body>
 
@@ -12,26 +12,26 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="index.html" class="navbar-logo">
-                <img src="../img/logo_nav.png" alt="MewSchool Logo">
+                <img src="../../img/logo_nav.png" alt="MewSchool Logo">
                 <span class="navbar-title">MewSchool</span>
             </a>
             <div class="lang-selector">
                 <button class="lang-btn" id="langBtn">
-                    <img src="img/icons/lang.png" alt="Language" class="lang-main-icon">
+                    <img src="../../img/icons/lang.png" alt="Language" class="lang-main-icon">
                     <span class="lang-current">עברית</span>
                     <span class="lang-arrow">▼</span>
                 </button>
                 <div class="lang-dropdown" id="langDropdown">
                     <a href="#" data-lang="he" data-page="math.html">
-                        <img src="img/icons/he.png" alt="Israel" class="lang-flag">
+                        <img src="../../img/icons/he.png" alt="Israel" class="lang-flag">
                         <span>עברית</span>
                     </a>
                     <a href="#" data-lang="ru" data-page="../ru/math.html">
-                        <img src="img/icons/ru.png" alt="Russia" class="lang-flag">
+                        <img src="../../img/icons/ru.png" alt="Russia" class="lang-flag">
                         <span>Русский</span>
                     </a>
                     <a href="#" data-lang="en" data-page="../en/math.html">
-                        <img src="img/icons/en.png" alt="USA" class="lang-flag">
+                        <img src="../../img/icons/en.png" alt="USA" class="lang-flag">
                         <span>English</span>
                     </a>
                 </div>
@@ -76,52 +76,7 @@
 
     <script>
         const mathTopics = [
-            // כיתה ה'
-            { grade: "כיתה ה'", topic: "אחוזים", link: "#" },
-            { grade: "כיתה ה'", topic: "גיאומטריה - שטח והיקף", link: "#" },
-            { grade: "כיתה ה'", topic: "מספרים עשרוניים", link: "#" },
-            { grade: "כיתה ה'", topic: "שברים", link: "#" },
-            
-            // כיתה ו'
-            { grade: "כיתה ו'", topic: "יחס ופרופורציה", link: "#" },
-            { grade: "כיתה ו'", topic: "ממוצע", link: "#" },
-            { grade: "כיתה ו'", topic: "מעגל - היקף ושטח", link: "#" },
-            { grade: "כיתה ו'", topic: "פעולות בשברים", link: "#" },
-
-            // כיתה ז'
-            { grade: "כיתה ז'", topic: "חזקות", link: "#" },
-            { grade: "כיתה ז'", topic: "משוואות", link: "#" },
-            { grade: "כיתה ז'", topic: "מספרים שליליים", link: "#" },
-            { grade: "כיתה ז'", topic: "פונקציות - מבוא", link: "#" },
-
-            // כיתה ח'
-            { grade: "כיתה ח'", topic: "אלגברה - פירוק לגורמים", link: "#" },
-            { grade: "כיתה ח'", topic: "גיאומטריה - משולשים", link: "#" },
-            { grade: "כיתה ח'", topic: "הסתברות", link: "#" },
-            { grade: "כיתה ח'", topic: "מערכות משוואות", link: "#" },
-
-            // כיתה ט'
-            { grade: "כיתה ט'", topic: "טרינום", link: "#" },
-            { grade: "כיתה ט'", topic: "נוסחאות הכפל המקוצר", link: "#" },
-            { grade: "כיתה ט'", topic: "פונקציה ריבועית (פרבולה)", link: "#" },
-            { grade: "כיתה ט'", topic: "משפט פיתגורס", link: "#" },
-
-            // כיתה י'
-            { grade: "כיתה י'", topic: "אי-שוויונים", link: "#" },
-            { grade: "כיתה י'", topic: "גיאומטריה אנליטית", link: "#" },
-            { grade: "כיתה י'", topic: "טריגונומטריה", link: "#" },
-            { grade: "כיתה י'", topic: "פונקציות - חקירה", link: "#" },
-
-            // כיתה י"א
-            { grade: "כיתה י\"א", topic: "חדו\"א - נגזרות", link: "#" },
-            { grade: "כיתה י\"א", topic: "סדרות חשבוניות", link: "#" },
-            { grade: "כיתה י\"א", topic: "סדרות הנדסיות", link: "#" },
-            { grade: "כיתה י\"א", topic: "וקטורים", link: "#" },
-
-            // כיתה י"ב
-            { grade: "כיתה י\"ב", topic: "אינטגרלים", link: "#" },
-            { grade: "כיתה י\"ב", topic: "הסתברות - ברנולי", link: "#" },
-            { grade: "כיתה י\"ב", topic: "מספרים מרוכבים", link: "#" }
+        // { grade: "Класс", topic: "Тема", link: "Ссылка" },
         ];
 
         const topicsContainer = document.getElementById('topicsContainer');
