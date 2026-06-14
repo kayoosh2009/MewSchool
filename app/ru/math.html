@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Математика - MewSchool</title>
+    <link href="../data/css/math_ru.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../../index_ru.html" class="navbar-logo">
+                <img src="../../img/logo_nav.png" alt="MewSchool Logo">
+                <span class="navbar-title">MewSchool</span>
+            </a>
+            <div class="lang-selector">
+                <button class="lang-btn" id="langBtn">
+                    <img src="../../img/icons/lang.png" alt="Language" class="lang-main-icon">
+                    <span class="lang-current">Русский</span>
+                    <span class="lang-arrow">▼</span>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <a href="../ru/math.html" data-lang="ru" data-page="../ru/math.html">
+                        <img src="../../img/icons/ru.png" alt="Russia" class="lang-flag">
+                        <span>Русский</span>
+                    </a>
+                    <a href="../he/math.html" data-lang="he" data-page="../he/math.htm">
+                        <img src="../../img/icons/he.png" alt="Israel" class="lang-flag">
+                        <span>עברית</span>
+                    </a>
+                    <a href="../en/math.html" data-lang="en" data-page="../en/math.html">
+                        <img src="../../img/icons/en.png" alt="USA" class="lang-flag">
+                        <span>English</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+        <h1 class="page-title">Математика</h1>
+
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" class="search-input" placeholder="Поиск темы (например: уравнения, дроби...)">
+        </div>
+
+        <div id="topicsContainer">
+            <!-- Темы будут сгенерированы здесь автоматически через JavaScript -->
+        </div>
+
+        <div id="noResults" class="no-results">
+            Темы, соответствующие вашему запросу, не найдены 😕
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-info">
+                <p><strong>Главный разработчик:</strong> @kayoosh_x</p>
+                <p><strong>Телефон:</strong> <a href="tel:+972535411783" dir="ltr">+972 535411783</a></p>
+                <p><strong>Почта:</strong> <a href="mailto:kayoosh2009@gmail.com">kayoosh2009@gmail.com</a></p>
+            </div>
+            <div class="footer-donate">
+                <a href="#" class="donate-btn">
+                    <span class="donate-icon">💜</span>
+                    <span>Задонатить</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // ==========================================
+        // 1. БАЗА ДАННЫХ ТЕМ (ЛЕГКО ДОБАВЛЯТЬ НОВЫЕ)
+        // ==========================================
+        // Просто добавь новую строку: { grade: "X класс", topic: "Название темы", link: "#" },
+        const mathTopics = [
+            // 5 класс
+            { grade: "5 класс", topic: "Проценты", link: "#" },
+            { grade: "5 класс", topic: "Геометрия - площадь и периметр", link: "#" },
+            { grade: "5 класс", topic: "Десятичные дроби", link: "#" },
+            { grade: "5 класс", topic: "Обыкновенные дроби", link: "#" },
+            
+            // 6 класс
+            { grade: "6 класс", topic: "Отношения и пропорции", link: "#" },
+            { grade: "6 класс", topic: "Среднее арифметическое", link: "#" },
+            { grade: "6 класс", topic: "Круг - длина окружности и площадь", link: "#" },
+            { grade: "6 класс", topic: "Действия с дробями", link: "#" },
+
+            // 7 класс
+            { grade: "7 класс", topic: "Степени", link: "#" },
+            { grade: "7 класс", topic: "Уравнения", link: "#" },
+            { grade: "7 класс", topic: "Отрицательные числа", link: "#" },
+            { grade: "7 класс", topic: "Функции - введение", link: "#" },
+
+            // 8 класс
+            { grade: "8 класс", topic: "Алгебра - разложение на множители", link: "#" },
+            { grade: "8 класс", topic: "Геометрия - треугольники", link: "#" },
+            { grade: "8 класс", topic: "Вероятность", link: "#" },
+            { grade: "8 класс", topic: "Системы уравнений", link: "#" },
+
+            // 9 класс
+            { grade: "9 класс", topic: "Квадратный трёхчлен", link: "#" },
+            { grade: "9 класс", topic: "Формулы сокращённого умножения", link: "#" },
+            { grade: "9 класс", topic: "Квадратичная функция (парабола)", link: "#" },
+            { grade: "9 класс", topic: "Теорема Пифагора", link: "#" },
+
+            // 10 класс
+            { grade: "10 класс", topic: "Неравенства", link: "#" },
+            { grade: "10 класс", topic: "Аналитическая геометрия", link: "#" },
+            { grade: "10 класс", topic: "Тригонометрия", link: "#" },
+            { grade: "10 класс", topic: "Исследование функций", link: "#" },
+
+            // 11 класс
+            { grade: "11 класс", topic: "Матан - производные", link: "#" },
+            { grade: "11 класс", topic: "Арифметические прогрессии", link: "#" },
+            { grade: "11 класс", topic: "Геометрические прогрессии", link: "#" },
+            { grade: "11 класс", topic: "Векторы", link: "#" },
+
+            // 12 класс
+            { grade: "12 класс", topic: "Интегралы", link: "#" },
+            { grade: "12 класс", topic: "Вероятность - схема Бернулли", link: "#" },
+            { grade: "12 класс", topic: "Комплексные числа", link: "#" }
+        ];
+
+        // ==========================================
+        // 2. ЛОГИКА ОТРИСОВКИ И ПОИСКА
+        // ==========================================
+        const topicsContainer = document.getElementById('topicsContainer');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+
+        function renderTopics(filterText = '') {
+            topicsContainer.innerHTML = '';
+            
+            // Фильтруем темы по поисковому запросу
+            const filteredTopics = mathTopics.filter(item => 
+                item.topic.toLowerCase().includes(filterText.toLowerCase()) || 
+                item.grade.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            if (filteredTopics.length === 0) {
+                noResults.classList.add('visible');
+                return;
+            } else {
+                noResults.classList.remove('visible');
+            }
+
+            // Группируем темы по классам
+            const grouped = {};
+            filteredTopics.forEach(item => {
+                if (!grouped[item.grade]) {
+                    grouped[item.grade] = [];
+                }
+                grouped[item.grade].push(item);
+            });
+
+            // Сортируем классы (например: 10 класс, 11 класс, 5 класс...) и темы внутри классов по алфавиту
+            const sortedGrades = Object.keys(grouped).sort((a, b) => {
+                const numA = parseInt(a.match(/\d+/)[0]);
+                const numB = parseInt(b.match(/\d+/)[0]);
+                return numA - numB;
+            });
+            
+            sortedGrades.forEach(grade => {
+                // Сортировка тем по алфавиту внутри класса
+                grouped[grade].sort((a, b) => a.topic.localeCompare(b.topic, 'ru'));
+
+                // Создаем секцию класса
+                const section = document.createElement('div');
+                section.className = 'grade-section';
+
+                const title = document.createElement('h2');
+                title.className = 'grade-title';
+                title.textContent = grade;
+                section.appendChild(title);
+
+                const list = document.createElement('div');
+                list.className = 'topics-list';
+
+                // Создаем карточки тем
+                grouped[grade].forEach(topic => {
+                    const link = document.createElement('a');
+                    link.href = topic.link;
+                    link.className = 'topic-item';
+                    link.innerHTML = `
+                        <span class="topic-icon">📐</span>
+                        <span class="topic-name">${topic.topic}</span>
+                    `;
+                    list.appendChild(link);
+                });
+
+                section.appendChild(list);
+                topicsContainer.appendChild(section);
+            });
+        }
+
+        // Слушатель событий для поиска в реальном времени
+        searchInput.addEventListener('input', (e) => {
+            renderTopics(e.target.value.trim());
+        });
+
+        // Первичная отрисовка
+        renderTopics();
+
+
+        // ==========================================
+        // 3. ЛОГИКА ЯЗЫКОВОГО СЕЛЕКТОРА
+        // ==========================================
+        const langBtn = document.getElementById('langBtn');
+        const langDropdown = document.getElementById('langDropdown');
+        const langLinks = langDropdown.querySelectorAll('a');
+
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langBtn.closest('.lang-selector').classList.toggle('active');
+        });
+
+        document.addEventListener('click', () => {
+            langBtn.closest('.lang-selector').classList.remove('active');
+        });
+
+        langLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.setItem('mewschool_lang', link.dataset.lang);
+                window.location.href = link.dataset.page;
+            });
+        });
+
+        (function checkLanguage() {
+            const savedLang = localStorage.getItem('mewschool_lang');
+            if (savedLang) {
+                const currentPage = window.location.pathname.split('/').pop();
+                if (currentPage === 'math.html' || currentPage === 'math_ru.html') {
+                    if (savedLang === 'he') {
+                        window.location.href = 'math.html'; // или index_he.html, если математика только там
+                    } else if (savedLang === 'en') {
+                        window.location.href = 'math_en.html';
+                    }
+                }
+            }
+        })();
+
+        (function highlightCurrentLang() {
+            const savedLang = localStorage.getItem('mewschool_lang') || 'ru';
+            langLinks.forEach(link => {
+                if (link.dataset.lang === savedLang) link.classList.add('active-lang');
+            });
+        })();
+    </script>
+</body>
+</html>
