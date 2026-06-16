@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    width: 100%;
+}
+
+.content-wrapper {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.image-container {
+    flex: 1;
+    max-width: 450px;
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    object-fit: cover;
+    display: block;
+    /* Убирает лишние отступы под картинкой */
+}
+
+.text-container {
+    flex: 1;
+}
+
+.text-container h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 32px;
+    line-height: 1.2;
+}
+
+.text-container p {
+    color: #555;
+    line-height: 1.7;
+    font-size: 18px;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+button {
+    padding: 14px 35px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #c2c9b5;
+    color: #333333;
+    type: button;
+    /* Гарантирует, что кнопка не будет отправлять формы */
+}
+
+button:hover:not(:disabled) {
+    background-color: #aeb6a2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+button:disabled {
+    background-color: #e0e0e0;
+    color: #999;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+        gap: 25px;
+        text-align: center;
+    }
+
+    .image-container {
+        max-width: 100%;
+    }
+
+    .text-container h2 {
+        font-size: 26px;
+    }
+
+    .text-container p {
+        font-size: 16px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    button {
+        width: 100%;
+    }
+}

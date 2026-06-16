@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Школьные предметы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .image-container {
+            flex: 1;
+            max-width: 450px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+            object-fit: cover;
+            display: block; /* Убирает лишние отступы под картинкой */
+        }
+
+        .text-container {
+            flex: 1;
+        }
+
+        .text-container h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 32px;
+            line-height: 1.2;
+        }
+
+        .text-container p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 18px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 14px 35px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #c2c9b5;
+            color: #333333;
+            type: button; /* Гарантирует, что кнопка не будет отправлять формы */
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #aeb6a2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background-color: #e0e0e0;
+            color: #999;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+                gap: 25px;
+                text-align: center;
+            }
+
+            .image-container {
+                max-width: 100%;
+            }
+
+            .text-container h2 {
+                font-size: 26px;
+            }
+
+            .text-container p {
+                font-size: 16px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="image-container">
+                <img id="slide-image" src="" alt="Изображение урока">
+            </div>
+            <div class="text-container">
+                <h2 id="slide-title"></h2>
+                <p id="slide-text"></p>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button id="prev-btn" type="button">← Назад</button>
+            <button id="next-btn" type="button">Далее →</button>
+        </div>
+    </div>
+
+    <script>
+        // Ждем полной загрузки страницы перед запуском скрипта
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Данные слайдов
+            const slides = [
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Введение",
+                    title: "Введение в треугольники",
+                    text: "Треугольник - это геометрическая фигура, образованная тремя отрезками, которые соединяют три точки, не лежащие на одной прямой. Треугольник имеет три стороны, три угла и три вершины."
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Виды+по+сторонам",
+                    title: "Виды треугольников по сторонам",
+                    text: "Равносторонний - все стороны равны. Равнобедренный - две стороны равны. Разносторонний - все стороны разной длины."
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Виды+по+углам",
+                    title: "Виды треугольников по углам",
+                    text: "Остроугольный - все углы острые (< 90°). Прямоугольный - один угол прямой (= 90°). Тупоугольный - один угол тупой (> 90°)."
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойства",
+                    title: "Свойства треугольников",
+                    text: "Сумма углов треугольника всегда равна 180°. Внешний угол треугольника равен сумме двух внутренних углов, не смежных с ним."
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Площадь",
+                    title: "Формулы площади",
+                    text: "Площадь можно найти через основание и высоту: S = ½ × a × h. Или по формуле Герона, зная все три стороны."
+                }
+            ];
+
+            let currentSlide = 0;
+
+            // Сохраняем элементы в переменные для быстрой работы (без постоянного поиска по DOM)
+            const slideImage = document.getElementById('slide-image');
+            const slideTitle = document.getElementById('slide-title');
+            const slideText = document.getElementById('slide-text');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            function updateSlide() {
+                const slide = slides[currentSlide];
+                
+                slideImage.src = slide.image;
+                slideTitle.textContent = slide.title;
+                slideText.textContent = slide.text;
+                
+                // Блокируем кнопку "Назад" на первом слайде
+                prevBtn.disabled = (currentSlide === 0);
+                
+                // Меняем текст кнопки "Далее" на последнем слайде
+                if (currentSlide === slides.length - 1) {
+                    nextBtn.textContent = "Закончить урок ✓";
+                } else {
+                    nextBtn.textContent = "Далее →";
+                }
+            }
+
+            // Обработчик кнопки "Назад"
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlide();
+                }
+            });
+
+            // Обработчик кнопки "Далее" / "Закончить"
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < slides.length - 1) {
+                    // Если это не последний слайд, просто идем дальше
+                    currentSlide++;
+                    updateSlide();
+                } else {
+                    // Если это последний слайд, выполняем переход
+                    finishLesson();
+                }
+            });
+
+            function finishLesson() {
+                // !!! ЗАМЕНИ "finish.html" НА НУЖНЫЙ ТЕБЕ АДРЕС !!!
+                // Например: "index.html", "test.html" или "https://твой-сайт.рф/урок2"
+                window.location.href = "finish.html"; 
+            }
+
+            // Запускаем отображение первого слайда при старте
+            updateSlide();
+        });
+    </script>
+</body>
+</html>
