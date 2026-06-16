@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 001</title>
+    <link href="../../../css/lesson_ru.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="image-container">
+                <img id="slide-image" src="" alt="Изображение урока">
+            </div>
+            <div class="text-container">
+                <h2 id="slide-title"></h2>
+                <p id="slide-text"></p>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="prev-btn" type="button">← Назад</button>
+            <button id="next-btn" type="button">Далее →</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = [
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Введение",
+                    title: "Что такое четырехугольник?",
+                    text: "Четырехугольник — это геометрическая фигура, у которой:\n• 4 стороны\n• 4 вершины (угла)\n• 2 диагонали"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Параллелограмм",
+                    title: "1. Параллелограмм (מקבילית)",
+                    text: "Определение: Четырехугольник, у которого противоположные стороны параллельны."
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+1",
+                    title: "Свойство параллелограмма #1",
+                    text: "Противоположные стороны равны по длине"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+2",
+                    title: "Свойство параллелограмма #2",
+                    text: "Противоположные углы равны"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+3",
+                    title: "Свойство параллелограмма #3",
+                    text: "Диагонали пересекаются и делятся пополам точкой пересечения"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+4",
+                    title: "Свойство параллелограмма #4",
+                    text: "Сумма соседних углов равна 180°"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Прямоугольник",
+                    title: "2. Прямоугольник (מלבן)",
+                    text: "Определение: Параллелограмм, у которого все углы прямые (90°)"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+1",
+                    title: "Свойство прямоугольника #1",
+                    text: "Все свойства параллелограмма сохраняются"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+2",
+                    title: "Свойство прямоугольника #2",
+                    text: "Все 4 угла равны 90° (прямые)"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+3",
+                    title: "Свойство прямоугольника #3",
+                    text: "Диагонали равны между собой"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Формула",
+                    title: "Площадь прямоугольника",
+                    text: "S = a × b\n(длина × ширина)"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Ромб",
+                    title: "3. Ромб (מעוין)",
+                    text: "Определение: Параллелограмм, у которого все стороны равны"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+1",
+                    title: "Свойство ромба #1",
+                    text: "Все свойства параллелограмма сохраняются"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+2",
+                    title: "Свойство ромба #2",
+                    text: "Все 4 стороны равны по длине"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+3",
+                    title: "Свойство ромба #3",
+                    text: "Диагонали перпендикулярны друг другу (пересекаются под углом 90°)"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+4",
+                    title: "Свойство ромба #4",
+                    text: "Диагонали делят углы пополам"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Формула",
+                    title: "Площадь ромба",
+                    text: "S = (d₁ × d₂) / 2\n(половина произведения диагоналей)"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Квадрат",
+                    title: "4. Квадрат (ריבוע)",
+                    text: "Определение: Четырехугольник, у которого все стороны равны И все углы прямые"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+1",
+                    title: "Свойство квадрата #1",
+                    text: "Все свойства прямоугольника сохраняются"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+2",
+                    title: "Свойство квадрата #2",
+                    text: "Все свойства ромба сохраняются"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+3",
+                    title: "Свойство квадрата #3",
+                    text: "Это 'идеальный' четырехугольник!"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Формула+1",
+                    title: "Площадь квадрата",
+                    text: "S = a²\n(сторона в квадрате)"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Формула+2",
+                    title: "Периметр квадрата",
+                    text: "P = 4a\n(4 стороны)"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Формула+3",
+                    title: "Диагональ квадрата",
+                    text: "d = a√2\n(сторона умноженная на корень из 2)"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Трапеция",
+                    title: "5. Трапеция (טרפז)",
+                    text: "Определение: Четырехугольник, у которого только две стороны параллельны (эти стороны называются основаниями)"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Виды",
+                    title: "Виды трапеций",
+                    text: "• Равнобедренная — боковые стороны равны\n• Прямоугольная — один из углов прямой"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+1",
+                    title: "Свойство равнобедренной трапеции #1",
+                    text: "Боковые стороны равны"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+2",
+                    title: "Свойство равнобедренной трапеции #2",
+                    text: "Углы при каждом основании равны"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+3",
+                    title: "Свойство равнобедренной трапеции #3",
+                    text: "Диагонали равны между собой"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Формула",
+                    title: "Площадь трапеции",
+                    text: "S = ((a + b) / 2) × h\n((сумма оснований) / 2) × высота"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Дельтоид",
+                    title: "6. Дельтоид (דלתון)",
+                    text: "Определение: Четырехугольник, у которого две пары смежных сторон равны (похож на воздушного змея)"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+1",
+                    title: "Свойство дельтоида #1",
+                    text: "Одна диагональ делится другой пополам"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+2",
+                    title: "Свойство дельтоида #2",
+                    text: "Одна диагональ является осью симметрии"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Свойство+3",
+                    title: "Свойство дельтоида #3",
+                    text: "Диагонали перпендикулярны друг другу"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Иерархия",
+                    title: "Иерархия четырехугольников",
+                    text: "Четырехугольник → Параллелограмм → Прямоугольник/Ромб → Квадрат\n\nКвадрат — это одновременно и прямоугольник, и ромб!"
+                },
+                {
+                    image: "https://via.placeholder.com/500x400/c2c9b5/333333?text=Советы",
+                    title: "Полезные советы",
+                    text: "1. Начинай изучение с общего к частному\n2. Рисуй фигуры и отмечай равные элементы\n3. Запомни формулы площадей\n4. Обращай внимание на свойства диагоналей"
+                }
+            ];
+
+            let currentSlide = 0;
+
+            const slideImage = document.getElementById('slide-image');
+            const slideTitle = document.getElementById('slide-title');
+            const slideText = document.getElementById('slide-text');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            function updateSlide() {
+                const slide = slides[currentSlide];
+
+                slideImage.src = slide.image;
+                slideTitle.textContent = slide.title;
+                slideText.textContent = slide.text;
+
+                prevBtn.disabled = (currentSlide === 0);
+
+                if (currentSlide === slides.length - 1) {
+                    nextBtn.textContent = "Закончить урок ✓";
+                } else {
+                    nextBtn.textContent = "Далее →";
+                }
+            }
+
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlide();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    updateSlide();
+                } else {
+                    finishLesson();
+                }
+            });
+
+            function finishLesson() {
+                window.location.href = "finish.html";
+            }
+            updateSlide();
+        });
+    </script>
+</body>
+
+</html>
