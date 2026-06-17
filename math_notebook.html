@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Векторный холст</title>
+    <style>
+        /* Базовые стили для интерфейса */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2b2b2b; /* Темный фон для контраста */
+        }
+
+        /* Левая панель (инструменты) */
+        .sidebar {
+            width: 80px;
+            background-color: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        /* Блок выбора цвета */
+        .color-picker {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: #2d2d2d;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .color-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .color-btn:hover { transform: scale(1.1); }
+        .color-btn.active { border-color: #ffffff; transform: scale(1.15); box-shadow: 0 0 8px rgba(255,255,255,0.3); }
+
+        /* Кнопки инструментов */
+        .tool-btn {
+            width: 50px;
+            height: 50px;
+            background-color: #333;
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .tool-btn:hover { background-color: #444; }
+        .tool-btn.active { background-color: #555; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); border: 1px solid #777;}
+        
+        /* Стили для изображений внутри кнопок. Если картинок нет, покажет alt текст */
+        .tool-btn img {
+            max-width: 30px;
+            max-height: 30px;
+            pointer-events: none;
+            color: #ccc;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        /* Отступ перед кнопкой удаления */
+        .spacer { flex-grow: 1; }
+
+        /* Правая часть (холст) */
+        .canvas-area {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #2b2b2b;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        canvas {
+            background-color: white;
+            /* Рисуем клетку 20x20 средствами CSS */
+            background-image: 
+                linear-gradient(to right, #d1d1d1 1px, transparent 1px),
+                linear-gradient(to bottom, #d1d1d1 1px, transparent 1px);
+            background-size: 20px 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            cursor: crosshair;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="color-picker">
+            <div class="color-btn active" style="background-color: black;" data-color="black"></div>
+            <div class="color-btn" style="background-color: red;" data-color="red"></div>
+            <div class="color-btn" style="background-color: green;" data-color="green"></div>
+            <div class="color-btn" style="background-color: blue;" data-color="blue"></div>
+            <div class="color-btn" style="background-color: purple;" data-color="purple"></div>
+        </div>
+
+        <button class="tool-btn active" data-tool="pencil" title="Карандаш">
+            <img src="img/interactive/pencil.png" alt="Карандаш">
+        </button>
+        <button class="tool-btn" data-tool="line" title="Линия по сетке">
+            <img src="img/interactive/line.png" alt="Линия">
+        </button>
+        <button class="tool-btn" data-tool="circle" title="Круг">
+            <img src="img/interactive/sycle.png" alt="Круг">
+        </button>
+        <button class="tool-btn" data-tool="eraser" title="Ластик">
+            <img src="img/interactive/erase.png" alt="Ластик">
+        </button>
+
+        <div class="spacer"></div>
+
+        <button class="tool-btn" id="clear-btn" title="Удалить все" style="background-color: #4a2121;">
+            <img src="img/interactive/delete.png" alt="Удалить">
+        </button>
+    </div>
+
+    <div class="canvas-area">
+        <canvas id="drawing-canvas" width="800" height="600"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('drawing-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Настройки состояния
+        let isDrawing = false;
+        let currentTool = 'pencil';
+        let currentColor = 'black';
+        let startX, startY;
+        let snapshot; // Снимок холста для динамической отрисовки фигур
+        
+        const gridSize = 20; // Размер клетки
+
+        // --- Управление UI ---
+        
+        // Выбор цвета
+        document.querySelectorAll('.color-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.color-btn.active').classList.remove('active');
+                btn.classList.add('active');
+                currentColor = btn.dataset.color;
+            });
+        });
+
+        // Выбор инструмента
+        document.querySelectorAll('.tool-btn[data-tool]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.tool-btn.active').classList.remove('active');
+                btn.classList.add('active');
+                currentTool = btn.dataset.tool;
+            });
+        });
+
+        // Очистка холста
+        document.getElementById('clear-btn').addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        // --- Логика рисования ---
+
+        // Получение точных координат мыши на холсте
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        }
+
+        // Привязка координат к сетке
+        function snapToGrid(value) {
+            return Math.round(value / gridSize) * gridSize;
+        }
+
+        // Начало рисования
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            const pos = getMousePos(e);
+            
+            startX = pos.x;
+            startY = pos.y;
+
+            // Если выбран инструмент Линия, привязываем начальную точку к клеткам
+            if (currentTool === 'line') {
+                startX = snapToGrid(startX);
+                startY = snapToGrid(startY);
+            }
+
+            // Сохраняем текущее состояние холста (важно для рисования линий и кругов)
+            snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+        });
+
+        // Процесс рисования
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            const pos = getMousePos(e);
+            let currentX = pos.x;
+            let currentY = pos.y;
+
+            // Настройки кисти
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            if (currentTool === 'eraser') {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.lineWidth = 20; // Размер ластика
+            } else {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = 2; // Толщина линий
+            }
+
+            if (currentTool === 'pencil' || currentTool === 'eraser') {
+                // Свободное рисование
+                ctx.lineTo(currentX, currentY);
+                ctx.stroke();
+            } else if (currentTool === 'line') {
+                // Восстанавливаем холст до начала рисования линии
+                ctx.putImageData(snapshot, 0, 0);
+                
+                // Привязка текущих координат к сетке
+                currentX = snapToGrid(currentX);
+                currentY = snapToGrid(currentY);
+                
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(currentX, currentY);
+                ctx.stroke();
+            } else if (currentTool === 'circle') {
+                // Восстанавливаем холст
+                ctx.putImageData(snapshot, 0, 0);
+                
+                ctx.beginPath();
+                // Вычисляем радиус по теореме Пифагора
+                const radius = Math.sqrt(Math.pow(currentX - startX, 2) + Math.pow(currentY - startY, 2));
+                ctx.arc(startX, startY, radius, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        });
+
+        // Завершение рисования
+        const stopDrawing = () => {
+            if (isDrawing) {
+                ctx.stroke();
+                ctx.closePath();
+                isDrawing = false;
+            }
+        };
+
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+    </script>
+</body>
+</html>
